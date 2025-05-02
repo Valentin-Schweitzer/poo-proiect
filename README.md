@@ -71,4 +71,4 @@ g++ -std=c++17 -Wall -Wextra -pedantic -o cabinet_medical main.cpp Pacient.cpp M
 
 ## Autor
 
-KTM – Facultatea de Matematică și Informatică, Universitatea din București – 2025
+Schweitzer Karl-Valentin – Facultatea de Matematică și Informatică, Universitatea din București – 2025
