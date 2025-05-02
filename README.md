@@ -23,21 +23,32 @@ Acest proiect gestionează entități dintr-un cabinet medical folosind programa
 
 ## Cerințe
 
-### Tema 1
-- Cel puțin 3 clase: `Pacient`, `Medic`, `Reteta`
-- Constructori, operator=, operator<<, metode utile
-- Cod separat în fișiere `.h` și `.cpp`
-- Stil de codare conform ghidului laboratorului
+Structura proiectului respectă cerințele din enunțurile pentru Tema 1 și Tema 2:
 
-### Tema 2
-- Moștenire: `Persoana` este clasă abstractă, celelalte clase o derivă
-- Cel puțin o funcție virtuală pură (`afiseazaRol()`)
-- Constructori virtuali (`clone()`)
-- Apeluri prin pointeri inteligenți
-- Clasă care gestionează pointeri la clase de bază (`Reteta`)
-- Excepții personalizate (cel puțin 3 clase)
-- Utilizare STL (`vector`, `string`, `shared_ptr`)
-- Fără `using namespace std`, cât mai multe `const`
+### Tema 1 – Programare orientată pe obiecte (bază)
+
+- Cel puțin 3 clase proprii: `Pacient`, `Medic`, `Reteta`
+- Implementarea de constructori, operator=, operator<<, metode utile precum:
+  - `eMinor()` – verifică dacă un pacient este minor;
+  - `esteRezident()` – determină dacă un medic este rezident;
+  - `adaugaDetalii()` – adaugă informații la rețetă.
+- Separarea codului în fișiere header `.h` și surse `.cpp`
+- Codul respectă convențiile de stil: `PascalCase` pentru clase, `camelCase` pentru metode și variabile, fără `using namespace std`
+- Teste și date de intrare hardcodate în `main.cpp`
+
+### Tema 2 – Moșteniri și excepții
+
+- Moștenire: clasă de bază abstractă `Persoana` și 3 clase derivate: `Pacient`, `Medic`, `Asistent`
+- Funcție virtuală pură: `afiseazaRol()` suprascrisă în fiecare clasă derivată
+- Funcție `clone()` în fiecare clasă derivată (constructor virtual)
+- Pointeri inteligenți (`std::shared_ptr<Persoana>`) folosiți pentru apeluri polimorfice
+- Clasa `Reteta` deține pointeri la `Pacient` și `Medic` și apelează metode virtuale
+- Ierarhie proprie de excepții derivată din `std::exception`:
+  - `ExceptieVarsta`, `ExceptieIdInvalid`, `ExceptieDetalii`
+- Tratare excepții: `throw` în constructori, `try/catch` în `main()`
+- Utilizare STL: `std::vector`, `std::string`, `std::shared_ptr`
+- Cod cât mai `const`-corect
+- Eliminare de getteri/setteri redundanți, favorizând metode polimorfice precum `afiseazaRol()`
 
 ## Exemplu rulare
 ```
