@@ -52,14 +52,37 @@ Structura proiectului respectă cerințele din enunțurile pentru Tema 1 și Tem
 
 ## Exemplu rulare
 ```
+=== Testare clase Persoana (polimorfism) ===
 Pacient: Ion Popescu, varsta: 17, greutate: 65.5
+Pacient: Ana Ionescu, varsta: 30, greutate: 52
+Pacient: Marian Georgescu, varsta: 12, greutate: 40
 Medic: Dr. Ionescu, ID: 120
+Medic: Dr. Vasilescu, ID: 95 (rezident)
+Medic: Dr. Stan, ID: 200
 Asistent: Maria Vasile, experienta: 6 ani
+Asistent: Andrei Coman, experienta: 10 ani
+
+=== Testare functionalitate Reteta ===
 
 Reteta:
 Pacient: Ion Popescu, varsta: 17, greutate: 65.5
 Medic: Dr. Ionescu, ID: 120
 Detalii: Paracetamol 500mg, de 3 ori pe zi dupa mese
+
+Reteta:
+Pacient: Ana Ionescu, varsta: 30, greutate: 52
+Medic: Dr. Vasilescu, ID: 95 (rezident)
+Detalii: Ibuprofen 400mg, 2x/zi
+
+=== Test sortare medici dupa ID ===
+Medic: Dr. Vasilescu, ID: 95 (rezident)
+Medic: Dr. Ionescu, ID: 120
+Medic: Dr. Stan, ID: 200
+
+=== Test exceptii ===
+[Exceptie catch 1] ExceptieVarsta: Varsta pacientului este invalida.
+[Exceptie catch 2] ExceptieIdInvalid: ID-ul medicului este invalid.
+[Exceptie catch 3] ExceptieDetalii: Detaliile retetei sunt invalide.
 ```
 
 ## Compilare
