@@ -1,19 +1,17 @@
 #!/usr/bin/bash
 
 # default values
-CPPCHECK_VER=2.14.2   # NOTE: consider updating this value in .github/workflows/cmake.yml:47 when changing this value
+CPPCHECK_VER=2.14.2
 CMAKE_BUILD_DIR=build
-CMAKE_OPTS=()         # example for CLI: -o "-DCMAKE_INSTALL_PREFIX=~/.local/ -DFILESDIR=~/.local/share/Cppcheck"
+CMAKE_OPTS=()
 
 while getopts ":b:o:v:" opt; do
   case "${opt}" in
-    b) CMAKE_BUILD_DIR="${OPTARG}"
-    ;;
-    o) IFS=" " read -r -a CMAKE_OPTS <<< "${OPTARG}"
-    ;;
-    v) CPPCHECK_VER="${OPTARG}"
-    ;;
-    *) printf "Unknown option %s; available options: \n\
+    b) CMAKE_BUILD_DIR="${OPTARG}" ;;
+    o) IFS=" " read -r -a CMAKE_OPTS <<< "${OPTARG}" ;;
+    v) CPPCHECK_VER="${OPTARG}" ;;
+    *)
+      printf "Unknown option %s; available options: \n\
         -b (build dir)\n\
         -o (cmake opts)\n\
         -v (cppcheck version)\n" "${opt}"
@@ -22,12 +20,17 @@ while getopts ":b:o:v:" opt; do
   esac
 done
 
-
-wget "https://github.com/danmar/cppcheck/archive/${CPPCHECK_VER}.zip"
+# clean up previous
+rm -rf cppcheck
+wget "https://github.com/danmar/cppcheck/archive/refs/tags/${CPPCHECK_VER}.zip"
 unzip -q "${CPPCHECK_VER}.zip"
 rm "${CPPCHECK_VER}.zip"
 mv "cppcheck-${CPPCHECK_VER}" cppcheck
 
 cd cppcheck || { echo "Eroare cd"; exit 1; }
-cmake -S . -B "${CMAKE_BUILD_DIR}" -DEXTERNALS_AS_SYSTEM=ON "${CMAKE_OPTS[@]}"
-cmake --build "${CMAKE_BUILD_DIR}" -j6
+
+# 🧼 remove the build directory if it exists
+rm -rf "${CMAKE_BUILD_DIR}"
+
+cmake -S . -B "${CMAKE_BUILD_DIR}" "${CMAKE_OPTS[@]}"
+cmake --build "${CMAKE_BUILD_DIR}" -j$(nproc)
