@@ -1,4 +1,4 @@
-#include "Reteta.h"
+#include "../include/Reteta.h"
 #include <iostream>
 
 Reteta::Reteta(std::shared_ptr<Pacient> p, std::shared_ptr<Medic> m, const std::string& d)

@@ -1,4 +1,4 @@
-#include "Pacient.h"
+#include "../include/Pacient.h"
 #include <iostream>
 
 Pacient::Pacient(const std::string& nume, int varsta, double greutate)

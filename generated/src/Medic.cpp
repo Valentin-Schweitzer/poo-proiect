@@ -1,4 +1,4 @@
-#include "Medic.h"
+#include "../include/Medic.h"
 #include <iostream>
 
 Medic::Medic(const std::string& nume, int id) : Persoana(nume), id(id) {

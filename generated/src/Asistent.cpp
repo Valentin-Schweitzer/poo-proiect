@@ -1,4 +1,4 @@
-#include "Asistent.h"
+#include "../include/Asistent.h"
 #include <iostream>
 
 Asistent::Asistent(const std::string& nume, int ani)

@@ -88,7 +88,11 @@ Medic: Dr. Stan, ID: 200
 ## Compilare
 
 ```bash
-g++ -std=c++17 -Wall -Wextra -pedantic -o cabinet_medical main.cpp Pacient.cpp Medic.cpp Asistent.cpp Reteta.cpp
+g++ -std=c++17 -Wall -Wextra -pedantic -o cabinet_medical main.cpp \
+generated/src/Pacient.cpp \
+generated/src/Medic.cpp \
+generated/src/Asistent.cpp \
+generated/src/Reteta.cpp
 ```
 
 ## Rulare
