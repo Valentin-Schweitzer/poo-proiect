@@ -43,3 +43,24 @@
 class Pacient : public Persoana {
     // ...
 };
+```
+### ✅ 2. Moșteniri: 1 clasă de bază + 3 derivate
+
+🔍 **Ce înseamnă:**  
+O clasă de bază (`Persoana`) oferă o "rețetă" generală, iar celelalte clase (`Pacient`, `Medic`, `Asistent`) o extind, adăugând detalii proprii.
+
+📁 **Cum am făcut:**  
+- `Persoana` este o clasă abstractă care conține un nume și două funcții pure.  
+- `Pacient`, `Medic`, `Asistent` moștenesc `Persoana` cu `: public Persoana`.
+
+#### 📄 Fragment – `Persoana.h`
+```cpp
+class Persoana {
+protected:
+    std::string nume;
+public:
+    Persoana(const std::string& nume);
+    virtual void afiseazaRol() const = 0;
+    virtual std::shared_ptr<Persoana> clone() const = 0;
+};
+```
