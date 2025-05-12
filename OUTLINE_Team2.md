@@ -1,6 +1,6 @@
 # OUTLINE - Prezentare Proiect POO (Tema 2)
 
-## 1. Introducere
+## Introducere
 
 - **Numele proiectului**: Cabinet Medical  
 - **Scopul**: gestionarea pacienților, medicilor, asistenților și rețetelor într-un sistem orientat pe obiecte.  
@@ -8,7 +8,7 @@
 
 ---
 
-## 2. Structura generală
+## Structura generală
 
 - **Clasa abstractă de bază**: `Persoana`  
 - **Clase derivate**: `Pacient`, `Medic`, `Asistent`  
@@ -44,6 +44,9 @@ class Pacient : public Persoana {
     // ...
 };
 ```
+
+---
+
 ### 2. Moșteniri: 1 clasă de bază + 3 derivate
 
 **Ce înseamnă:**  
@@ -163,4 +166,120 @@ Când creezi un `Pacient`, apelezi constructorul `Persoana` pentru a seta `nume`
 Medic::Medic(const std::string& nume, int id)
     : Persoana(nume), id(id) {}
 ```
+
+---
+
+### 7. O clasă cu pointeri la bază și apeluri virtuale
+
+**Ce înseamnă:**
+Ai o clasă (de exemplu `Reteta`) care conține un `Persoana*` (sau `shared_ptr<Persoana>`) și apelează metode virtuale prin acesta.
+
+**Cum am făcut:**
+
+* În `Reteta.h`:
+
+```cpp
+std::shared_ptr<Persoana> pacient;
+std::shared_ptr<Persoana> medic;
+```
+
+* În `Reteta.cpp`:
+
+```cpp
+void Reteta::afiseaza() const {
+    std::cout << "Reteta:\n";
+    pacient->afiseazaRol();
+    medic->afiseazaRol();
+}
+```
+
+---
+
+### 8. Copy/Assignment (operator=) – eliminat
+
+**Ce înseamnă:**
+Nu am mai scris manual `operator=`, deoarece `std::string` și `shared_ptr` știu să se copieze corect.
+
+**Cum am făcut:**
+Am eliminat complet `operator=`. Codul este sigur pentru că STL gestionează automat memoria.
+
+---
+
+### 9. Downcast cu `dynamic_pointer_cast`
+
+**Ce înseamnă:**
+Treci de la pointer la `Persoana` la pointer la `Pacient` doar dacă obiectul este într-adevăr un pacient.
+
+**Cum am făcut:**
+
+```cpp
+if (auto p = std::dynamic_pointer_cast<Pacient>(persoana)) {
+    std::cout << "Greutatea pacientului este: " << p->getGreutate() << "\n";
+}
+```
+
+---
+
+### 10. Smart pointers (`shared_ptr`)
+
+**Ce înseamnă:**
+În loc să gestionezi manual memoria cu `new` și `delete`, folosești `shared_ptr`, care eliberează automat memoria când nu mai este folosit.
+
+**Cum am făcut:**
+Peste tot:
+
+```cpp
+std::shared_ptr<Persoana> p = std::make_shared<Pacient>(...);
+```
+
+---
+
+### 11. Excepții – ierarhie proprie
+
+**Ce înseamnă:**
+Ai clase de erori care derivă din `std::exception`, pentru cazuri precum:
+
+* vârstă invalidă
+* ID invalid
+* detalii lipsă în rețetă
+
+**Fișier: `Exceptii.h`**
+
+```cpp
+class ExceptieVarsta : public std::exception {
+public:
+    const char* what() const noexcept override {
+        return "Varsta pacientului invalida!";
+    }
+};
+```
+
+**Fișier: `main.cpp`**
+
+```cpp
+try {
+    auto pacient = Pacient("Anonim", -5, 70);
+} catch (const std::exception& e) {
+    std::cerr << "Eroare: " << e.what() << "\n";
+}
+```
+
+---
+
+### 12. STL, `const`, funcții de nivel înalt
+
+**Ce înseamnă:**
+
+* **STL:** `vector`, `string`, `shared_ptr` în loc de array-uri statice sau `char*`.
+* **`const`:** Funcțiile care nu modifică obiectul au `const` la final.
+* **Funcții de nivel înalt:** Nu te bazezi doar pe getter/setteri simpli, ci pe metode clare, cu scop definit (ex: `afiseazaRol()`).
+
+**Exemple:**
+
+```cpp
+std::vector<std::shared_ptr<Persoana>> persoane;
+const std::string& getNume() const;
+void afiseazaRol() const override;
+```
+
 
